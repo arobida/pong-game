@@ -7,6 +7,8 @@ var ballSpeedX=10;
 var ballSpeedY=5;
 //paddle
 var paddle1Y=250;
+var paddle2Y=250;
+const PADDLE_GIRTH=10;
 const PADDLE_HEIGHT=100;
 
 function calculateMousePos(e) {
@@ -58,7 +60,11 @@ function moveEverything() {
         }
     }
     if(ballX > canvas.width) {
-        ballSpeedX=-ballSpeedX;
+        if(ballY > paddle2Y && ballY<paddle2Y+PADDLE_HEIGHT) {
+            ballSpeedX=-ballSpeedX;
+        } else {
+        ballReset();
+        }
     }
     if(ballY < 0) {
         ballSpeedY=-ballSpeedY;
@@ -73,7 +79,9 @@ function drawEverything() {
     //next line colors the canvas
     colorRect(0,0,canvas.width,canvas.height,'black');
     //next line draws the player paddle(left)
-    colorRect(0,paddle1Y,10,PADDLE_HEIGHT,'white');
+    colorRect(0,paddle1Y,PADDLE_GIRTH,PADDLE_HEIGHT,'white');
+    //next line draws the opponents paddle(right)
+    colorRect(canvas.width-10,paddle2Y,PADDLE_GIRTH,PADDLE_HEIGHT,'white');
     //next line draws the ball
     colorCircle(ballX,ballY,10,'red');
 }
