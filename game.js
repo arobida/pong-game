@@ -11,8 +11,10 @@ var paddle2Y=250;
 const PADDLE_GIRTH=10;
 const PADDLE_HEIGHT=100;
 //score
+const MAX_SCORE=4;
 var playerScore=0;
 var opponentScore=0;
+var winScreen=false;
 
 function calculateMousePos(e) {
     var rect=canvas.getBoundingClientRect();
@@ -46,6 +48,12 @@ window.onload = function() {
 }
 
 function ballReset() {
+    if(playerScore>=MAX_SCORE || opponentScore>=MAX_SCORE) {
+        playerScore=0;
+        opponentScore=0;
+        winScreen=true;
+    }
+    
     ballSpeedX=-ballSpeedX;
     ballX=canvas.width/2;
     ballY=canvas.height/2;
@@ -61,6 +69,10 @@ function computerMovement() {
 }
 
 function moveEverything() {
+    if(winScreen==true) {
+        return;
+    }
+    
     computerMovement();
     
     ballX+=ballSpeedX;
@@ -69,17 +81,25 @@ function moveEverything() {
     if(ballX < 0) {
         if(ballY > paddle1Y && ballY<paddle1Y+PADDLE_HEIGHT) {
             ballSpeedX=-ballSpeedX;
+            
+            var deltaY=ballY-(paddle1Y+PADDLE_HEIGHT/2);
+            ballSpeedY=deltaY*0.35;
         } else {
-        ballReset();
+        //must be before ballReset()
         opponentScore++;
+        ballReset();
         }
     }
     if(ballX > canvas.width) {
         if(ballY > paddle2Y && ballY<paddle2Y+PADDLE_HEIGHT) {
             ballSpeedX=-ballSpeedX;
+            
+            var deltaY=ballY-(paddle2Y+PADDLE_HEIGHT/2);
+            ballSpeedY=deltaY*0.35;
         } else {
-        ballReset();
+        //must be before ballReset()
         playerScore++;
+        ballReset();
         }
     }
     if(ballY < 0) {
@@ -94,6 +114,12 @@ function drawEverything() {
     
     //next line colors the canvas
     colorRect(0,0,canvas.width,canvas.height,'black');
+    //next line displays the winning screen
+    if(winScreen==true) {
+        canvasContext.fillStyle='white';
+        canvasContext.fillText('click to continue',100,100);
+        return;
+    }
     //next line draws the player paddle(left)
     colorRect(0,paddle1Y,PADDLE_GIRTH,PADDLE_HEIGHT,'white');
     //next line draws the opponents paddle(right)
