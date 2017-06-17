@@ -29,14 +29,17 @@ function drawEverything() {
     
     //next line colors the canvas
     colorRect(0,0,canvas.width,canvas.height,'black');
-    //next line is for the left paddle
+    //next line draws the player paddle(left)
     colorRect(0,210,10,100,'white');
-    //next line is for the ball
-    canvasContext.fillStyle='red';
+    //next line draws the ball
+    colorCircle(ballX,150,10,'red');
+}
+
+function colorCircle(centerX,centerY,radius,drawColor) {
+    canvasContext.fillStyle=drawColor;
     canvasContext.beginPath();
-    canvasContext.arc(ballX,100,10,0,Math.PI*2,true);
+    canvasContext.arc(centerX,centerY,radius,0,Math.PI*2,true);
     canvasContext.fill();
-    
 }
 
 function colorRect(leftX, topY, width, height, drawColor) {
