@@ -11,7 +11,7 @@ var paddle2Y=250;
 const PADDLE_GIRTH=10;
 const PADDLE_HEIGHT=100;
 //score
-const MAX_SCORE=4;
+const MAX_SCORE=8;
 var playerScore=0;
 var opponentScore=0;
 var winScreen=false;
@@ -27,6 +27,13 @@ function calculateMousePos(e) {
     };
 }
 
+function handleMouseClick(e) {
+    if(winScreen) {
+        playerScore=0;
+        opponentScore=0;
+        winScreen=false;
+    }
+}
 
 
 window.onload = function() {
@@ -40,6 +47,8 @@ window.onload = function() {
         moveEverything();
     }, 1000/framesPerSecond);
     
+    canvas.addEventListener('mousedown',handleMouseClick);
+    
     canvas.addEventListener('mousemove',
         function(e) {
             var mousePos=calculateMousePos(e);
@@ -49,8 +58,6 @@ window.onload = function() {
 
 function ballReset() {
     if(playerScore>=MAX_SCORE || opponentScore>=MAX_SCORE) {
-        playerScore=0;
-        opponentScore=0;
         winScreen=true;
     }
     
@@ -110,6 +117,12 @@ function moveEverything() {
     }
 }
 
+function drawNet() {
+    for(var i=0;i<canvas.height; i+=40) {
+        colorRect(canvas.width/2-1,i,2,20,'white')
+    }
+}
+
 function drawEverything() {
     
     //next line colors the canvas
@@ -117,15 +130,24 @@ function drawEverything() {
     //next line displays the winning screen
     if(winScreen==true) {
         canvasContext.fillStyle='white';
-        canvasContext.fillText('click to continue',100,100);
+        
+        if(playerScore>=MAX_SCORE) {
+            canvasContext.fillText('You Win!!!',350,200);
+        } else if(opponentScore>=MAX_SCORE) {
+            canvasContext.fillText('Computer Wins!!!',350,200);
+        }
+        
+        canvasContext.fillText('click to continue',(canvas.width/2)-16,400);
         return;
     }
+    //next line draws the net
+    drawNet();
     //next line draws the player paddle(left)
     colorRect(0,paddle1Y,PADDLE_GIRTH,PADDLE_HEIGHT,'white');
     //next line draws the opponents paddle(right)
     colorRect(canvas.width-10,paddle2Y,PADDLE_GIRTH,PADDLE_HEIGHT,'white');
     //next line draws the ball
-    colorCircle(ballX,ballY,10,'red');
+    colorCircle(ballX,ballY,10,'white');
     //next line draws the score
     canvasContext.fillText(playerScore,100, 100);
     canvasContext.fillText(opponentScore,canvas.width-100, 100);
