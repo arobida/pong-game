@@ -14,3 +14,8 @@ body {
     border-color:#f442a4;
     border-radius:8px;
 }
+
+.social-icon {
+  width:60px;
+  padding-top:20px;
+}
