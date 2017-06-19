@@ -143,11 +143,11 @@ function drawEverything() {
     //next line draws the net
     drawNet();
     //next line draws the player paddle(left)
-    colorRect(0,paddle1Y,PADDLE_GIRTH,PADDLE_HEIGHT,'white');
+    colorRect(0,paddle1Y,PADDLE_GIRTH,PADDLE_HEIGHT,'#c5b11a');
     //next line draws the opponents paddle(right)
-    colorRect(canvas.width-10,paddle2Y,PADDLE_GIRTH,PADDLE_HEIGHT,'white');
+    colorRect(canvas.width-10,paddle2Y,PADDLE_GIRTH,PADDLE_HEIGHT,'#c5b11a');
     //next line draws the ball
-    colorCircle(ballX,ballY,10,'white');
+    colorCircle(ballX,ballY,10,'#c5b11a');
     //next line draws the score
     canvasContext.fillText(playerScore,100, 100);
     canvasContext.fillText(opponentScore,canvas.width-100, 100);
