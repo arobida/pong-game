@@ -1,0 +1,16 @@
+body {
+    background-color:#5f5c5d;
+    color:#c5b11a;
+    text-align:center;
+}
+
+#gameContainer {
+    text-align: center;
+}
+
+#gameCanvas {
+    margin-top:60px;
+    border: solid 10px;
+    border-color:#f442a4;
+    border-radius:8px;
+}
